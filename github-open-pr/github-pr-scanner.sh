@@ -11,7 +11,7 @@ else
     mkdir git_venv
     echo "Creating new virtual env"
     virtualenv git_venv
-    . mist_venv/bin/activate
+    . git_venv/bin/activate
 fi
 
 pip install github3.py
