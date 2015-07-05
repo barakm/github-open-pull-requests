@@ -44,14 +44,18 @@ for repo in it_repos:
     print "Scanning repo: %s" % repo.name
     it_pulls = repo.iter_pulls(state='open')
     for pull in it_pulls:
-        print "Found Pull request: %s" % pull.title
-        pullNode = ET.SubElement(pullsNode, "pull")
-        pullNode.set("repo", repo.name)
-        pullNode.set("title", pull.title)
-        pullNode.set("url", pull.html_url)
-        pullNode.set("user",  pull.user.login)
-        pullNode.set("created", pull.created_at.ctime())
-        pull_counter += 1
+        try:
+            print "Found Pull request: %s" % pull.title
+            pullNode = ET.SubElement(pullsNode, "pull")
+            pullNode.set("repo", repo.name)
+            pullNode.set("title", pull.title)
+            pullNode.set("url", pull.html_url)
+            pullNode.set("user",  pull.user.login)
+            pullNode.set("created", pull.created_at.ctime())
+            pull_counter += 1
+        except Exception as e:
+            print "Failed to read Pull request", e
+
 
 pullsNode.set("total", "%i" % pull_counter)
 
